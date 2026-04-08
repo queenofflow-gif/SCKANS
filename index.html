@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SC Information Technology — Redesign Concept</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --purple: #5C2D91;
+    --purple-mid: #7B3FB5;
+    --purple-light: #EDE6F6;
+    --accent: #F0A500;
+    --green: #2ECC71;
+    --red: #E74C3C;
+    --gray-bg: #F7F6FA;
+    --gray-border: #E0DAF0;
+    --text: #1A1030;
+    --text-soft: #6B5F80;
+    --white: #ffffff;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* ── TOP NAV BAR ── */
+  .topbar {
+    background: var(--purple);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+    height: 52px;
+    font-size: 0.8rem;
+  }
+  .topbar a { color: rgba(255,255,255,0.8); text-decoration: none; margin-right: 1.5rem; }
+  .topbar a:hover { color: white; }
+  .topbar-right { display: flex; align-items: center; gap: 0.5rem; }
+  .status-pill {
+    display: flex; align-items: center; gap: 0.4rem;
+    background: rgba(255,255,255,0.15);
+    padding: 0.2rem 0.75rem; border-radius: 20px;
+    font-size: 0.75rem; font-weight: 500;
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--purple) 0%, #3A1A6E 60%, #1A0A35 100%);
+    padding: 3.5rem 2.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(120,60,200,0.3) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; max-width: 1100px; margin: 0 auto; }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.6rem; font-weight: 800;
+    color: white; line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: rgba(255,255,255,0.7); margin-top: 0.75rem; font-size: 1rem; max-width: 480px; }
+  .hero-ctas { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent); color: #1A0A35;
+    padding: 0.7rem 1.4rem; border-radius: 8px;
+    font-weight: 600; font-size: 0.9rem;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(240,165,0,0.4); }
+  .btn-ghost {
+    background: rgba(255,255,255,0.12); color: white;
+    padding: 0.7rem 1.4rem; border-radius: 8px;
+    font-weight: 500; font-size: 0.9rem;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.25); cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-ghost:hover { background: rgba(255,255,255,0.2); }
+  .hero-stat-box {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px; padding: 1.5rem 2rem;
+    display: flex; flex-direction: column; gap: 1rem;
+    backdrop-filter: blur(10px);
+  }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--accent); }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* ── QUICK ACTION STRIP ── */
+  .quick-actions {
+    background: white;
+    border-bottom: 1px solid var(--gray-border);
+    padding: 0 2.5rem;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(92,45,145,0.08);
+  }
+  .quick-actions-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; gap: 0; overflow-x: auto;
+  }
+  .qa-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--text-soft); text-decoration: none;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .qa-item:hover, .qa-item.active { color: var(--purple); border-bottom-color: var(--purple); }
+  .qa-item .icon { font-size: 1rem; }
+
+  /* ── SYSTEM STATUS BANNER ── */
+  .status-banner {
+    background: #F0FFF6; border: 1px solid #A8EAC2;
+    margin: 1.5rem 2.5rem;
+    border-radius: 10px; padding: 0.75rem 1.25rem;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 1.5rem auto;
+  }
+  .status-banner.warning { background: #FFFBF0; border-color: #F5D87A; }
+  .status-left { display: flex; align-items: center; gap: 0.75rem; font-size: 0.88rem; }
+  .status-icon { font-size: 1.1rem; }
+  .status-link { color: var(--purple); font-weight: 500; text-decoration: none; font-size: 0.82rem; }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 2rem 2.5rem 4rem; }
+
+  /* Section headers */
+  .section-header { margin-bottom: 1.25rem; }
+  .section-label {
+    font-size: 0.7rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--purple-mid); margin-bottom: 0.3rem;
+  }
+  .section-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text); }
+
+  /* ── CONTACT GRID ── */
+  .contact-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .contact-card {
+    background: white; border-radius: 14px; padding: 1.4rem;
+    border: 1px solid var(--gray-border);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .contact-card:hover { box-shadow: 0 8px 24px rgba(92,45,145,0.1); transform: translateY(-2px); }
+  .contact-card.primary { border-color: var(--purple); border-width: 2px; }
+  .card-badge {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    background: var(--purple-light); color: var(--purple);
+    padding: 0.2rem 0.6rem; border-radius: 20px; margin-bottom: 0.75rem;
+  }
+  .card-badge.yellow { background: #FFF8E1; color: #B8860B; }
+  .card-badge.blue { background: #E8F4FF; color: #1565C0; }
+  .contact-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .contact-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-soft); margin-bottom: 0.3rem; }
+  .contact-detail a { color: var(--purple); text-decoration: none; font-weight: 500; }
+  .contact-detail a:hover { text-decoration: underline; }
+  .hours-tag {
+    display: inline-block; background: var(--gray-bg);
+    border-radius: 6px; padding: 0.35rem 0.7rem;
+    font-size: 0.78rem; font-weight: 500; color: var(--text-soft);
+    margin-top: 0.5rem;
+  }
+
+  /* ── SERVICE CATALOG ── */
+  .services-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .service-card {
+    background: white; border-radius: 14px; padding: 1.3rem;
+    border: 1px solid var(--gray-border);
+    transition: box-shadow 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .service-card:hover { box-shadow: 0 6px 20px rgba(92,45,145,0.1); transform: translateY(-2px); }
+  .service-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    background: var(--purple-light); color: var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 0.75rem;
+  }
+  .service-card h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .service-card p { font-size: 0.78rem; color: var(--text-soft); line-height: 1.5; }
+  .service-card .arrow { font-size: 0.75rem; color: var(--purple); margin-top: 0.6rem; font-weight: 600; }
+
+  /* ── GETTING STARTED ── */
+  .onboarding-section {
+    background: linear-gradient(135deg, var(--purple) 0%, #4A1F80 100%);
+    border-radius: 18px; padding: 2rem; margin-bottom: 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  .onboarding-section::after {
+    content: '🎓';
+    position: absolute; right: 2rem; bottom: -0.5rem;
+    font-size: 5rem; opacity: 0.15;
+  }
+  .onboarding-section h2 {
+    font-family: 'Syne', sans-serif;
+    color: white; font-size: 1.3rem; margin-bottom: 0.4rem;
+  }
+  .onboarding-section p { color: rgba(255,255,255,0.7); font-size: 0.85rem; margin-bottom: 1.25rem; }
+  .steps-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .step-pill {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px; padding: 0.75rem 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    color: white; font-size: 0.82rem; font-weight: 500;
+    flex: 1; min-width: 140px;
+  }
+  .step-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: #1A0A35;
+    font-size: 0.7rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ── TWO COLUMN ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+
+  /* ── FAQ ── */
+  .faq-section { background: white; border-radius: 14px; border: 1px solid var(--gray-border); overflow: hidden; }
+  .faq-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-border); }
+  .faq-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .faq-item { border-bottom: 1px solid var(--gray-border); }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    padding: 0.9rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; font-size: 0.85rem; font-weight: 500;
+    transition: background 0.15s;
+  }
+  .faq-q:hover { background: var(--gray-bg); }
+  .faq-q .chevron { color: var(--purple); font-size: 0.7rem; transition: transform 0.2s; }
+  .faq-a { padding: 0 1.5rem 0.9rem; font-size: 0.82rem; color: var(--text-soft); line-height: 1.6; display: none; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .chevron { transform: rotate(180deg); }
+
+  /* ── SOFTWARE ── */
+  .software-section { background: white; border-radius: 14px; border: 1px solid var(--gray-border); overflow: hidden; }
+  .software-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-border); }
+  .software-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .software-list { padding: 0.75rem 1rem; }
+  .software-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--gray-bg);
+    font-size: 0.83rem;
+  }
+  .software-item:last-child { border-bottom: none; }
+  .sw-left { display: flex; align-items: center; gap: 0.6rem; }
+  .sw-icon { font-size: 1.1rem; }
+  .sw-name { font-weight: 500; }
+  .sw-badge {
+    font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 10px;
+  }
+  .sw-badge.free { background: #E6F9EE; color: #1A7A4A; }
+  .sw-badge.licensed { background: #EDE6F6; color: var(--purple); }
+  .sw-link { color: var(--purple); font-size: 0.78rem; text-decoration: none; font-weight: 500; }
+
+  /* ── SECURITY ── */
+  .security-card {
+    background: #1A0A35; border-radius: 14px; padding: 1.5rem;
+    color: white;
+  }
+  .security-card h3 {
+    font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .security-card p { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-bottom: 1rem; }
+  .security-tips { display: flex; flex-direction: column; gap: 0.6rem; }
+  .tip {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    background: rgba(255,255,255,0.07); border-radius: 8px; padding: 0.65rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  .tip .tip-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 0.05rem; }
+  .tip a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+  /* ── COMPUTER LABS ── */
+  .labs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+  .lab-card {
+    background: white; border-radius: 14px; border: 1px solid var(--gray-border); padding: 1.25rem;
+  }
+  .lab-card h4 { font-weight: 600; font-size: 0.92rem; margin-bottom: 0.25rem; }
+  .lab-detail { font-size: 0.8rem; color: var(--text-soft); margin-bottom: 0.2rem; display: flex; gap: 0.4rem; }
+  .open-tag { display: inline-block; background: #E6F9EE; color: #1A7A4A; font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 10px; }
+  .closed-tag { display: inline-block; background: #FEE; color: #C0392B; font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 10px; }
+
+  /* ── STAFF DIRECTORY PREVIEW ── */
+  .staff-row { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .staff-card {
+    background: white; border-radius: 14px; border: 1px solid var(--gray-border); padding: 1.25rem;
+    display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 240px;
+  }
+  .avatar {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--purple-light); color: var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .staff-info h4 { font-size: 0.88rem; font-weight: 600; }
+  .staff-info p { font-size: 0.78rem; color: var(--text-soft); }
+  .staff-info a { font-size: 0.78rem; color: var(--purple); text-decoration: none; font-weight: 500; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-stat-box { flex-direction: row; justify-content: space-around; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: repeat(2,1fr); }
+    .two-col, .labs-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .main { padding: 1.5rem 1rem 3rem; }
+    .hero { padding: 2rem 1rem; }
+    .hero h1 { font-size: 1.8rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .steps-row { flex-direction: column; }
+  }
+
+  /* ── MOCKUP LABEL ── */
+  .mockup-badge {
+    position: fixed; top: 12px; right: 12px; z-index: 9999;
+    background: var(--accent); color: #1A0A35;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem; border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<div class="mockup-badge">🎨 Redesign Concept</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div>
+    <a href="#">About SC</a>
+    <a href="#">Admission</a>
+    <a href="#">Academics</a>
+    <a href="#">Student Life</a>
+    <a href="#">1-800-846-1543</a>
+  </div>
+  <div class="topbar-right">
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      All Systems Operational
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid">
+    <div>
+      <h1>Information<br>Technology at <span>SC</span></h1>
+      <p>Powered by OculusIT — supporting students, faculty, and staff with the tools to learn, teach, and work without friction.</p>
+      <div class="hero-ctas">
+        <a href="#" class="btn-primary">🎫 Submit a Ticket</a>
+        <a href="#" class="btn-ghost">📅 Book Helpdesk Appointment</a>
+        <a href="#" class="btn-ghost">🔑 Password Reset</a>
+      </div>
+    </div>
+    <div class="hero-stat-box">
+      <div class="stat-item">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Virtual Chat Support</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">&lt;4hr</div>
+        <div class="stat-label">Avg. Response Time</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Computer Labs</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK NAV -->
+<div class="quick-actions">
+  <div class="quick-actions-inner">
+    <a href="#" class="qa-item active"><span class="icon">🏠</span> Overview</a>
+    <a href="#" class="qa-item"><span class="icon">🎓</span> New Students</a>
+    <a href="#" class="qa-item"><span class="icon">💻</span> Software</a>
+    <a href="#" class="qa-item"><span class="icon">🛡️</span> Security</a>
+    <a href="#" class="qa-item"><span class="icon">🖥️</span> Computer Labs</a>
+    <a href="#" class="qa-item"><span class="icon">📡</span> System Status</a>
+    <a href="#" class="qa-item"><span class="icon">👥</span> IT Staff</a>
+    <a href="#" class="qa-item"><span class="icon">❓</span> FAQ</a>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner">
+    <div class="status-left">
+      <span class="status-icon">✅</span>
+      <div><strong>All systems normal</strong> — Blackboard, Microsoft 365, Self-Service, and Campus Wi-Fi are fully operational as of March 6, 2026 at 9:14 AM.</div>
+    </div>
+    <a href="#" class="status-link">View Full Status Page →</a>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section-header">
+    <div class="section-label">Get Help</div>
+    <div class="section-title">Contact & Support</div>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card primary">
+      <div class="card-badge">🟣 Primary Helpdesk</div>
+      <h3>SC Helpdesk</h3>
+      <div class="contact-detail">📞 <a href="tel:6202296444">620-229-6444</a></div>
+      <div class="contact-detail">✉️ <a href="mailto:sc.helpdesk@sckans.edu">sc.helpdesk@sckans.edu</a></div>
+      <div class="contact-detail">📍 Christy Admin Bldg, 2nd Floor (North)</div>
+      <span class="hours-tag">Mon–Fri, 8 AM – 5 PM</span>
+    </div>
+    <div class="contact-card">
+      <div class="card-badge yellow">🌙 After-Hours</div>
+      <h3>After-Hours Blackboard Support</h3>
+      <div class="contact-detail">📞 <a href="tel:3162013490">316-201-3490</a></div>
+      <div class="contact-detail">For Blackboard issues only outside business hours</div>
+      <span class="hours-tag">Available 24/7</span>
+    </div>
+    <div class="contact-card">
+      <div class="card-badge blue">💬 Online</div>
+      <h3>Virtual Support</h3>
+      <div class="contact-detail">🤖 SC Virtual Chat Agent — available anytime via the chat icon (bottom-right)</div>
+      <div class="contact-detail">🎫 <a href="#">Submit a Support Ticket Online</a></div>
+      <div class="contact-detail">📅 <a href="#">Schedule a Helpdesk Appointment</a></div>
+      <span class="hours-tag">Ticket Portal: 24/7</span>
+    </div>
+  </div>
+
+  <!-- SERVICE CATALOG -->
+  <div class="section-header">
+    <div class="section-label">What We Support</div>
+    <div class="section-title">IT Service Catalog</div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">📧</div>
+      <h4>Microsoft 365</h4>
+      <p>Email, Teams, Word, Excel, OneDrive — free for all SC students.</p>
+      <div class="arrow">Login & Setup →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📚</div>
+      <h4>Blackboard LMS</h4>
+      <p>Access your courses, assignments, grades, and announcements.</p>
+      <div class="arrow">Login to Blackboard →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📶</div>
+      <h4>Campus Wi-Fi</h4>
+      <p>Connect your devices to the SC campus wireless network.</p>
+      <div class="arrow">Wi-Fi Setup Guide →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔐</div>
+      <h4>Account & Passwords</h4>
+      <p>Reset your SC password, manage MFA, and update account settings.</p>
+      <div class="arrow">Password Reset →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🖨️</div>
+      <h4>Printing Services</h4>
+      <p>Print from any campus lab or your personal device via SC Print.</p>
+      <div class="arrow">Printing Guide →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🖥️</div>
+      <h4>Computer Labs</h4>
+      <p>Open-access labs across campus with specialized software installed.</p>
+      <div class="arrow">Find a Lab →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🔒</div>
+      <h4>VPN Access</h4>
+      <p>Securely access SC network resources from off campus.</p>
+      <div class="arrow">VPN Setup →</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💻</div>
+      <h4>Loaner Devices</h4>
+      <p>Short-term laptop loans available for enrolled students in need.</p>
+      <div class="arrow">Check Availability →</div>
+    </div>
+  </div>
+
+  <!-- GETTING STARTED -->
+  <div class="onboarding-section">
+    <h2>🎓 New Student? Start Here.</h2>
+    <p>Complete these 5 steps to get fully set up for your first semester at SC.</p>
+    <div class="steps-row">
+      <div class="step-pill"><span class="step-num">1</span> Activate your SC account</div>
+      <div class="step-pill"><span class="step-num">2</span> Set up Microsoft 365</div>
+      <div class="step-pill"><span class="step-num">3</span> Log into Blackboard</div>
+      <div class="step-pill"><span class="step-num">4</span> Connect to SC Wi-Fi</div>
+      <div class="step-pill"><span class="step-num">5</span> Enable Multi-Factor Auth</div>
+    </div>
+  </div>
+
+  <!-- FAQ + SOFTWARE -->
+  <div class="two-col">
+    <div class="faq-section">
+      <div class="faq-header"><h3>❓ Frequently Asked Questions</h3></div>
+      <div class="faq-item open" onclick="this.classList.toggle('open')">
+        <div class="faq-q">How do I reset my SC password? <span class="chevron">▼</span></div>
+        <div class="faq-a">Visit the <a href="#">Password Reset Portal</a> and follow the prompts. You'll need access to your recovery email or phone number. If locked out, contact the helpdesk at 620-229-6444.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">What software do I get for free? <span class="chevron">▼</span></div>
+        <div class="faq-a">All enrolled students receive Microsoft 365 (Word, Excel, PowerPoint, Teams, OneDrive) at no cost. Additional software is available in computer labs.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">How do I connect to SC campus Wi-Fi? <span class="chevron">▼</span></div>
+        <div class="faq-a">Select "SC-Wireless" from your network list and sign in with your SC credentials. Visit our <a href="#">Wi-Fi setup guide</a> for device-specific instructions.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">My Blackboard isn't loading — what do I do? <span class="chevron">▼</span></div>
+        <div class="faq-a">First, check the <a href="#">System Status page</a>. If all systems are green, try clearing your browser cache. For after-hours issues, call 316-201-3490.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">Can I borrow a laptop? <span class="chevron">▼</span></div>
+        <div class="faq-a">Yes. Short-term loaner laptops are available through the Helpdesk. Visit the Helpdesk in Christy Admin during business hours to check availability.</div>
+      </div>
+    </div>
+
+    <div class="software-section">
+      <div class="software-header"><h3>💿 Available Software</h3></div>
+      <div class="software-list">
+        <div class="software-item">
+          <div class="sw-left"><span class="sw-icon">📧</span><span class="sw-name">Microsoft 365</span></div>
+          <div><span class="sw-badge free">Free</span></div>
+        </div>
+        <div class="software-item">
+          <div class="sw-left"><span class="sw-icon">📹</span><span class="sw-name">Microsoft Teams</span></div>
+          <div><span class="sw-badge free">Free</span></div>
+        </div>
+        <div class="software-item">
+          <div class="sw-left"><span class="sw-icon">☁️</span><span class="sw-name">OneDrive (1TB)</span></div>
+          <div><span class="sw-badge free">Free</span></div>
+        </div>
+        <div class="software-item">
+          <div class="sw-left"><span class="sw-icon">🔬</span><span class="sw-name">SPSS Statistics</span></div>
+          <div><span class="sw-badge licensed">Lab Only</span></div>
+        </div>
+        <div class="software-item">
+          <div class="sw-left"><span class="sw-icon">🎨</span><span class="sw-name">Adobe Creative Suite</span></div>
+          <div><span class="sw-badge licensed">Lab Only</span></div>
+        </div>
+        <div class="software-item" style="padding-bottom:0.3rem;">
+          <a href="#" class="sw-link">View full software catalog →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY + LABS -->
+  <div class="two-col">
+    <div class="security-card">
+      <h3>🛡️ Security & Acceptable Use</h3>
+      <p>Protect your SC account and personal data with these essential practices.</p>
+      <div class="security-tips">
+        <div class="tip"><span class="tip-icon">🔐</span> Enable Multi-Factor Authentication (MFA) on your SC account — <a href="#">Set up MFA</a></div>
+        <div class="tip"><span class="tip-icon">🎣</span> Never share your SC password. IT will never ask for it via email or phone.</div>
+        <div class="tip"><span class="tip-icon">📱</span> Keep your devices and software updated to prevent security vulnerabilities.</div>
+        <div class="tip"><span class="tip-icon">📋</span> Review the <a href="#">Acceptable Use Policy</a> before using campus technology resources.</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-header">
+        <div class="section-label">Campus Resources</div>
+        <div class="section-title">Computer Labs</div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div class="lab-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <h4>Mossman Library Lab</h4>
+            <span class="open-tag">Open Now</span>
+          </div>
+          <div class="lab-detail">📍 Mossman Library, Lower Level</div>
+          <div class="lab-detail">🕐 Mon–Fri: 7:30 AM – 10 PM &nbsp;|&nbsp; Sat–Sun: 10 AM – 6 PM</div>
+          <div class="lab-detail">🖥️ 24 Windows PCs &nbsp;·&nbsp; Printing Available</div>
+        </div>
+        <div class="lab-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <h4>Christy Admin Computer Lab</h4>
+            <span class="open-tag">Open Now</span>
+          </div>
+          <div class="lab-detail">📍 Christy Admin Bldg, Room 112</div>
+          <div class="lab-detail">🕐 Mon–Fri: 8 AM – 5 PM</div>
+          <div class="lab-detail">🖥️ 16 Windows PCs &nbsp;·&nbsp; Adobe Suite Available</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAFF -->
+  <div class="section-header">
+    <div class="section-label">Meet the Team</div>
+    <div class="section-title">IT Staff Directory</div>
+  </div>
+  <div class="staff-row">
+    <div class="staff-card">
+      <div class="avatar">JD</div>
+      <div class="staff-info">
+        <h4>Jane Doe</h4>
+        <p>Director of IT / OculusIT Lead</p>
+        <a href="#">j.doe@sckans.edu</a>
+      </div>
+    </div>
+    <div class="staff-card">
+      <div class="avatar">MS</div>
+      <div class="staff-info">
+        <h4>Mike Smith</h4>
+        <p>Helpdesk Specialist</p>
+        <a href="#">m.smith@sckans.edu</a>
+      </div>
+    </div>
+    <div class="staff-card">
+      <div class="avatar">AL</div>
+      <div class="staff-info">
+        <h4>Amy Lee</h4>
+        <p>Network & Infrastructure</p>
+        <a href="#">a.lee@sckans.edu</a>
+      </div>
+    </div>
+    <div class="staff-card">
+      <div class="avatar">TR</div>
+      <div class="staff-info">
+        <h4>Tom Rivera</h4>
+        <p>Blackboard LMS Administrator</p>
+        <a href="#">t.rivera@sckans.edu</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  // Simple FAQ toggle already handled with onclick
+  // Animate cards on load
+  document.querySelectorAll('.contact-card, .service-card, .lab-card, .staff-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = `opacity 0.4s ease ${i * 0.05}s, transform 0.4s ease ${i * 0.05}s`;
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 100 + i * 50);
+  });
+</script>
+</body>
+</html>
