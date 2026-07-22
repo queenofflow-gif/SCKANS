@@ -12,7 +12,7 @@
     --purple: #5C2D91;
     --purple-mid: #7B3FB5;
     --purple-light: #EDE6F6;
-    --accent: #F0A500;
+    --accent: #C9A8F0;
     --green: #2ECC71;
     --red: #E74C3C;
     --gray-bg: #F7F6FA;
@@ -76,7 +76,7 @@
   .hero p { color: rgba(255,255,255,0.7); margin-top: 0.75rem; font-size: 1rem; max-width: 480px; }
   .hero-ctas { display: flex; gap: 0.75rem; margin-top: 1.5rem; flex-wrap: wrap; }
   .btn-primary {
-    background: var(--accent); color: #1A0A35;
+    background: white; color: var(--purple);
     padding: 0.7rem 1.4rem; border-radius: 8px;
     font-weight: 600; font-size: 0.9rem;
     text-decoration: none; border: none; cursor: pointer;
@@ -169,7 +169,7 @@
     background: var(--purple-light); color: var(--purple);
     padding: 0.2rem 0.6rem; border-radius: 20px; margin-bottom: 0.75rem;
   }
-  .card-badge.yellow { background: #FFF8E1; color: #B8860B; }
+  .card-badge.yellow { background: var(--purple-light); color: var(--purple); }
   .card-badge.blue { background: #E8F4FF; color: #1565C0; }
   .contact-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
   .contact-detail { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-soft); margin-bottom: 0.3rem; }
@@ -230,7 +230,7 @@
   }
   .step-num {
     width: 22px; height: 22px; border-radius: 50%;
-    background: var(--accent); color: #1A0A35;
+    background: var(--purple); color: white;
     font-size: 0.7rem; font-weight: 700;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
@@ -307,11 +307,14 @@
   .closed-tag { display: inline-block; background: #FEE; color: #C0392B; font-size: 0.7rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 10px; }
 
   /* ── STAFF DIRECTORY PREVIEW ── */
-  .staff-row { display: flex; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+  .staff-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  @media (max-width: 900px) { .staff-row { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .staff-row { grid-template-columns: 1fr; } }
   .staff-card {
     background: white; border-radius: 14px; border: 1px solid var(--gray-border); padding: 1.25rem;
-    display: flex; align-items: center; gap: 1rem; flex: 1; min-width: 240px;
+    display: flex; align-items: center; gap: 1rem;
   }
+  .staff-info .phone { font-size: 0.76rem; color: var(--text-soft); }
   .avatar {
     width: 46px; height: 46px; border-radius: 50%;
     background: var(--purple-light); color: var(--purple);
@@ -342,58 +345,83 @@
   /* ── MOCKUP LABEL ── */
   .mockup-badge {
     position: fixed; top: 12px; right: 12px; z-index: 9999;
-    background: var(--accent); color: #1A0A35;
+    background: var(--purple); color: white;
     font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
     padding: 0.3rem 0.75rem; border-radius: 20px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
+
+  /* ── NEW STUDENT GUIDE ── */
+  .guide-section { background: white; border-radius: 14px; border: 1px solid var(--gray-border); overflow: hidden; margin-bottom: 2.5rem; }
+  .guide-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-border); }
+  .guide-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; }
+  .guide-header p { font-size: 0.82rem; color: var(--text-soft); margin-top: 0.2rem; }
+  .guide-item { border-bottom: 1px solid var(--gray-border); }
+  .guide-item:last-child { border-bottom: none; }
+  .guide-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.9rem 1.5rem; cursor: pointer; font-size: 0.88rem; font-weight: 600;
+    transition: background 0.15s;
+  }
+  .guide-q:hover { background: var(--gray-bg); }
+  .guide-q .chevron { color: var(--purple); font-size: 0.7rem; transition: transform 0.2s; }
+  .guide-a { padding: 0 1.5rem 1rem; font-size: 0.83rem; color: var(--text-soft); line-height: 1.7; display: none; }
+  .guide-a ol, .guide-a ul { margin: 0.4rem 0 0.4rem 1.2rem; }
+  .guide-a li { margin-bottom: 0.3rem; }
+  .guide-a a { color: var(--purple); font-weight: 500; }
+  .guide-a strong { color: var(--text); }
+  .guide-item.open .guide-a { display: block; }
+  .guide-item.open .chevron { transform: rotate(180deg); }
+  .callout { background: var(--purple-light); border-radius: 8px; padding: 0.7rem 0.9rem; margin: 0.5rem 0; font-size: 0.8rem; }
+
+  /* ── FOOTER ── */
+  .site-footer { background: var(--purple); color: rgba(255,255,255,0.85); padding: 2rem 2.5rem; font-size: 0.8rem; margin-top: 2rem; }
+  .site-footer a { color: var(--accent); text-decoration: none; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+
+
+  /* ── DECLUTTER OVERRIDES ── */
+  .main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 4rem; }
+  .section-header { margin-bottom: 1.25rem; margin-top: 3.5rem; }
+  .section-header:first-child { margin-top: 0; }
+  .hero { text-align: left; }
+  .hero-grid { grid-template-columns: 1fr; max-width: 760px; }
+  .services-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .contact-grid { grid-template-columns: 1.4fr 1fr; }
+  .resale-banner {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    background: white; border: 1px solid var(--gray-border); border-left: 4px solid var(--purple);
+    border-radius: 14px; padding: 1.1rem 1.5rem; margin-top: 1.25rem;
+  }
+  .resale-banner h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.1rem; }
+  .resale-banner p { font-size: 0.8rem; color: var(--text-soft); }
+  .resale-banner .btn-resale {
+    background: var(--purple); color: white; text-decoration: none; white-space: nowrap;
+    padding: 0.55rem 1.1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 500;
+  }
+  .resale-banner .btn-resale:hover { background: var(--purple-mid); }
+  @media (max-width: 900px) { .services-grid { grid-template-columns: repeat(2,1fr); } .contact-grid { grid-template-columns: 1fr; } .resale-banner { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
+
 </style>
 </head>
 <body>
 
-<div class="mockup-badge">🎨 Redesign Concept</div>
-
 <!-- TOP BAR -->
 <div class="topbar">
-  <div>
-    <a href="#">About SC</a>
-    <a href="#">Admission</a>
-    <a href="#">Academics</a>
-    <a href="#">Student Life</a>
-    <a href="#">1-800-846-1543</a>
-  </div>
-  <div class="topbar-right">
-    <div class="status-pill">
-      <span class="status-dot"></span>
-      All Systems Operational
-    </div>
-  </div>
+  <div style="font-weight:600; letter-spacing:0.02em;">Southwestern College &nbsp;·&nbsp; Information Technology</div>
 </div>
 
 <!-- HERO -->
-<div class="hero">
+<div class="hero" id="overview">
   <div class="hero-grid">
     <div>
       <h1>Information<br>Technology at <span>SC</span></h1>
-      <p>Powered by OculusIT — supporting students, faculty, and staff with the tools to learn, teach, and work without friction.</p>
+      <p>Powered by OculusIT — supporting students, faculty, and staff with the tools to learn, teach, and work without friction. The SC Helpdesk is your first stop for all tech-related issues.</p>
       <div class="hero-ctas">
-        <a href="#" class="btn-primary">🎫 Submit a Ticket</a>
-        <a href="#" class="btn-ghost">📅 Book Helpdesk Appointment</a>
-        <a href="#" class="btn-ghost">🔑 Password Reset</a>
-      </div>
-    </div>
-    <div class="hero-stat-box">
-      <div class="stat-item">
-        <div class="stat-num">24/7</div>
-        <div class="stat-label">Virtual Chat Support</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">&lt;4hr</div>
-        <div class="stat-label">Avg. Response Time</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">3</div>
-        <div class="stat-label">Computer Labs</div>
+        <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=8YXLLGh1UUih59yFkMl2SEMAfeFpgURNuTrZMgPqjvxUNkZYRUVFSDE1M0tLSUI0VTkyNU1QN1pSRS4u" class="btn-primary">🎫 Submit a Ticket</a>
+        <a href="https://outlook.office.com/book/SouthwesternCollege2@sckans.edu/?ismsaljsauthenabled" class="btn-ghost">📅 Book an Appointment</a>
+        <a href="https://password.sckans.edu" class="btn-ghost">🔑 Password Reset</a>
       </div>
     </div>
   </div>
@@ -402,30 +430,181 @@
 <!-- QUICK NAV -->
 <div class="quick-actions">
   <div class="quick-actions-inner">
-    <a href="#" class="qa-item active"><span class="icon">🏠</span> Overview</a>
-    <a href="#" class="qa-item"><span class="icon">🎓</span> New Students</a>
-    <a href="#" class="qa-item"><span class="icon">💻</span> Software</a>
-    <a href="#" class="qa-item"><span class="icon">🛡️</span> Security</a>
-    <a href="#" class="qa-item"><span class="icon">🖥️</span> Computer Labs</a>
-    <a href="#" class="qa-item"><span class="icon">📡</span> System Status</a>
-    <a href="#" class="qa-item"><span class="icon">👥</span> IT Staff</a>
-    <a href="#" class="qa-item"><span class="icon">❓</span> FAQ</a>
+    <a href="#services" class="qa-item active"><span class="icon">🧭</span> Services</a>
+    <a href="#new-students" class="qa-item"><span class="icon">🎓</span> New Students</a>
+    <a href="#help" class="qa-item"><span class="icon">🙋</span> Get Help</a>
+    <a href="#labs" class="qa-item"><span class="icon">🖥️</span> Computer Labs</a>
+    <a href="#faq" class="qa-item"><span class="icon">❓</span> FAQ</a>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- STATUS BANNER -->
-  <div class="status-banner">
-    <div class="status-left">
-      <span class="status-icon">✅</span>
-      <div><strong>All systems normal</strong> — Blackboard, Microsoft 365, Self-Service, and Campus Wi-Fi are fully operational as of March 6, 2026 at 9:14 AM.</div>
+  <!-- SERVICE CATALOG -->
+  <div class="section-header" id="services">
+    <div class="section-label">What We Support</div>
+    <div class="section-title">IT Services</div>
+  </div>
+  <div class="services-grid">
+    <a class="service-card" href="https://login.microsoftonline.com/?whr=sckans.edu" style="text-decoration:none; color:inherit;">
+      <div class="service-icon">📧</div>
+      <h4>Microsoft 365</h4>
+      <p>SC email, Teams, Word, Excel, PowerPoint, OneDrive — free for all students.</p>
+      <div class="arrow">Login at office.sckans.edu →</div>
+    </a>
+    <a class="service-card" href="https://learn.sckans.edu/" style="text-decoration:none; color:inherit;">
+      <div class="service-icon">📚</div>
+      <h4>Blackboard</h4>
+      <p>Your courses, assignments, grades, and announcements.</p>
+      <div class="arrow">Login to Blackboard →</div>
+    </a>
+    <a class="service-card" href="https://selfservice.sckans.edu/" style="text-decoration:none; color:inherit;">
+      <div class="service-icon">🗂️</div>
+      <h4>Self-Service</h4>
+      <p>Registration, grades, billing, and student records.</p>
+      <div class="arrow">Login to Self-Service →</div>
+    </a>
+    <a class="service-card" href="https://sckans.edu/file/6759" style="text-decoration:none; color:inherit;">
+      <div class="service-icon">📶</div>
+      <h4>Campus Wi-Fi</h4>
+      <p>Connect to SC_Secure with your SC email address and password.</p>
+      <div class="arrow">Wi-Fi Setup Guide →</div>
+    </a>
+    <a class="service-card" href="https://password.sckans.edu" style="text-decoration:none; color:inherit;">
+      <div class="service-icon">🔐</div>
+      <h4>Account & Passwords</h4>
+      <p>Reset your SC password and manage your security info.</p>
+      <div class="arrow">Password Reset →</div>
+    </a>
+    <a class="service-card" href="#printing" style="text-decoration:none; color:inherit;">
+      <div class="service-icon">🖨️</div>
+      <h4>Printing (CardSwipe)</h4>
+      <p>Email cardswipe@sckans.edu, then swipe your ID at any CardSwipe printer.</p>
+      <div class="arrow">Printing Guide →</div>
+    </a>
+  </div>
+
+  <!-- LAPTOP RESALES -->
+  <div class="resale-banner">
+    <div>
+      <h4>💻 Laptop Resales</h4>
+      <p>SC laptops are available for purchase at the end of their cycle — great condition, student-friendly pricing.</p>
     </div>
-    <a href="#" class="status-link">View Full Status Page →</a>
+    <a href="https://form.jotform.com/SouthwesternCollege/laptop-resales" class="btn-resale">Shop Laptop Resales →</a>
+  </div>
+
+  <!-- GETTING STARTED -->
+  <div class="onboarding-section" id="new-students" style="margin-top:3.5rem;">
+    <h2>🎓 New Student? Start Here.</h2>
+    <p>Complete these 5 steps to get fully set up for your first semester at SC. Full instructions for each step are in the guide below.</p>
+    <div class="steps-row">
+      <div class="step-pill"><span class="step-num">1</span> Set up your SC laptop & account</div>
+      <div class="step-pill"><span class="step-num">2</span> Connect to SC_Secure Wi-Fi</div>
+      <div class="step-pill"><span class="step-num">3</span> Set up MFA (Microsoft Authenticator)</div>
+      <div class="step-pill"><span class="step-num">4</span> Log into Blackboard & Self-Service</div>
+      <div class="step-pill"><span class="step-num">5</span> Get Teams on your phone</div>
+    </div>
+  </div>
+
+  <!-- NEW STUDENT SETUP GUIDE (from New Student Setup Instructions 2026) -->
+  <div class="guide-section">
+    <div class="guide-header">
+      <h3>📘 New Student Setup Guide (2026)</h3>
+      <p>Welcome to Southwestern College! Everything you need to set up your new laptop and access your SC accounts — Microsoft 365, Blackboard, and Self-Service.</p>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">💻 Laptop Setup — Logging In for the First Time <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <ol>
+          <li>Power on your laptop and complete the Windows setup wizard: select your language (English), region (United States), and keyboard layout (US), then skip the second keyboard layout.</li>
+          <li>When prompted to connect to a network, connect to the <strong>SC_Secure</strong> network.<br>
+            <strong>Username:</strong> firstname.lastname@sckans.edu &nbsp;·&nbsp; <strong>Password:</strong> your email password.</li>
+          <li>Choose <strong>Yes</strong> if asked about being visible to other devices, then click Next.</li>
+          <li>Sign into your laptop with your SC email address and password.</li>
+        </ol>
+        <div class="callout">Already changed your Office 365 (email) password using the instructions sent to your <strong>personal</strong> email? Use that password to log in.</div>
+        <p>If this is the first time using your Office 365 account, you'll be prompted to set up additional security information to verify your identity. We recommend the <strong>Mobile App (Microsoft Authenticator)</strong> option for ease of use. You'll then be prompted to change your password. Your new password must be at least <strong>8 characters</strong> and contain a capital letter, lowercase letter, number, and special character.</p>
+      </div>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">👤 Windows Hello Biometric Login <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <p>All SC laptops include a Windows Hello facial recognition camera or fingerprint sensor for secure, password-free sign-in. You can enable it during initial setup (a 6-digit PIN is also required), or later:</p>
+        <ol>
+          <li>Type "Windows Hello" into the search bar next to the Start menu and choose <strong>Sign-in Options</strong>.</li>
+          <li>Select <strong>Facial Recognition</strong> or <strong>Fingerprint Recognition</strong>, click <strong>Set up</strong>, and follow the prompts.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">☁️ OneDrive Cloud Storage <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <p>Every SC student gets OneDrive cloud storage (1TB by default — need more? <a href="https://helpdesk.sckans.edu">submit a ticket</a>). The SC Helpdesk automatically configures OneDrive to back up your Documents, Pictures, and Desktop folders. Check your sync status by clicking the OneDrive icon in your taskbar. More info: <a href="https://support.microsoft.com/onedrive">support.microsoft.com/onedrive</a>.</p>
+      </div>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">📦 Windows Applications (Auto-Install) <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <p>Your SC-issued laptop automatically downloads and installs Microsoft Office, Acrobat Reader, and the Cisco AnyConnect VPN client. This can take up to 15 minutes from first login — please stay connected to the network for about 15 minutes after logging in so everything installs.</p>
+      </div>
+    </div>
+
+    <div class="guide-item" id="printing" onclick="this.classList.toggle('open')">
+      <div class="guide-q">🖨️ Printing on Campus (CardSwipe) <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <ol>
+          <li>Email your document to <a href="mailto:cardswipe@sckans.edu">cardswipe@sckans.edu</a> <strong>from your SC email address</strong>.</li>
+          <li>Go to any CardSwipe printer on campus and swipe your student ID card to retrieve your print job.</li>
+        </ol>
+        <p>Supported formats: Word (.doc/.docx), Excel (.xls/.xlsx), PowerPoint (.ppt/.pptx), PDF, and common image files (.jpg, .gif, .png).</p>
+      </div>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">📧 Microsoft 365 — Email & Office <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <p>SC provides all students with a Microsoft 365 account for the duration of enrollment — SC email, online Office apps, OneDrive cloud storage, and more.</p>
+        <p>To log in, go to <a href="https://office.sckans.edu">office.sckans.edu</a> and sign in with your full email address (firstname.lastname@sckans.edu) and password.</p>
+        <p>Mobile setup: <a href="https://support.microsoft.com/en-us/office/set-up-the-office-app-and-outlook-on-ios-devices-0402b37e-49c4-4419-a030-f34c2013041f">iOS instructions</a> · <a href="https://support.microsoft.com/en-us/office/set-up-office-apps-and-email-on-android-6ef2ebf2-fc2d-474a-be4a-5a801365c87f">Android instructions</a> · <a href="https://sckans.edu/file/6529">Microsoft 365 Policy</a></p>
+      </div>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">📚 Blackboard — First Login & Password <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <p>Go to <a href="https://learn.sckans.edu">learn.sckans.edu</a> and sign in with your <strong>username</strong> (student ID number without dashes or spaces) and the password <strong>Jinx####</strong> (#### = last 4 digits of your ID number).</p>
+        <p>To change your password after logging in: open the drop-down menu by your name (upper-right) → <strong>Settings → Personal Information → Change Password</strong>, enter your current password and your new password twice, then submit.</p>
+      </div>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">🗂️ Self-Service — First Login & Password Reset <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <p>Go to <a href="https://selfservice.sckans.edu">selfservice.sckans.edu</a> and sign in with your username (student ID number without dashes or spaces) and password.</p>
+        <p>First time, or forgot your password? Use the <strong>"Forgot Password?"</strong> link on the Self-Service homepage. You'll receive an email from do_not_reply@sckans.edu at your primary email on file (typically your SC email) with a link to set a new password.</p>
+      </div>
+    </div>
+
+    <div class="guide-item" onclick="this.classList.toggle('open')">
+      <div class="guide-q">📱 Set Up Microsoft Teams on Your Phone <span class="chevron">▼</span></div>
+      <div class="guide-a" onclick="event.stopPropagation()">
+        <ol>
+          <li><strong>Find the app:</strong> Search "Microsoft Teams" in the Google Play Store (Android) or Apple App Store (iPhone).</li>
+          <li><strong>Download:</strong> Tap Install or Get, then Open when it finishes.</li>
+          <li><strong>Sign in:</strong> Enter your school email address and password.</li>
+          <li><strong>Choose account:</strong> If asked, pick <strong>Work or school account</strong> (not Personal).</li>
+        </ol>
+        <p>Schools often use a special login screen — you may need to re-enter your password or approve a login code on another device. This is normal. Once you're in, you can chat with the Helpdesk at <strong>sc.helpdesk</strong>.</p>
+      </div>
+    </div>
   </div>
 
   <!-- CONTACT -->
-  <div class="section-header">
+  <div class="section-header" id="help">
     <div class="section-label">Get Help</div>
     <div class="section-title">Contact & Support</div>
   </div>
@@ -433,238 +612,171 @@
     <div class="contact-card primary">
       <div class="card-badge">🟣 Primary Helpdesk</div>
       <h3>SC Helpdesk</h3>
-      <div class="contact-detail">📞 <a href="tel:6202296444">620-229-6444</a></div>
+      <div class="contact-detail">📞 <a href="tel:+16202296444">620-229-6444</a></div>
       <div class="contact-detail">✉️ <a href="mailto:sc.helpdesk@sckans.edu">sc.helpdesk@sckans.edu</a></div>
-      <div class="contact-detail">📍 Christy Admin Bldg, 2nd Floor (North)</div>
+      <div class="contact-detail">💬 Chat with us on Microsoft Teams — <strong>sc.helpdesk</strong></div>
+      <div class="contact-detail">🎫 <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=8YXLLGh1UUih59yFkMl2SEMAfeFpgURNuTrZMgPqjvxUNkZYRUVFSDE1M0tLSUI0VTkyNU1QN1pSRS4u">Submit a ticket online</a> or <a href="https://outlook.office.com/book/SouthwesternCollege2@sckans.edu/?ismsaljsauthenabled">book an appointment</a></div>
+      <div class="contact-detail">📍 Christy Administration Building, Room 215 (Second Level, North end)</div>
+      <div class="contact-detail" style="font-size:0.78rem;">Visiting in person? Please call or email first to schedule a time.</div>
       <span class="hours-tag">Mon–Fri, 8 AM – 5 PM</span>
     </div>
     <div class="contact-card">
       <div class="card-badge yellow">🌙 After-Hours</div>
       <h3>After-Hours Blackboard Support</h3>
-      <div class="contact-detail">📞 <a href="tel:3162013490">316-201-3490</a></div>
-      <div class="contact-detail">For Blackboard issues only outside business hours</div>
+      <div class="contact-detail">📞 <a href="tel:+13162013490">316-201-3490</a></div>
+      <div class="contact-detail">For Blackboard issues only, outside business hours</div>
       <span class="hours-tag">Available 24/7</span>
     </div>
-    <div class="contact-card">
-      <div class="card-badge blue">💬 Online</div>
-      <h3>Virtual Support</h3>
-      <div class="contact-detail">🤖 SC Virtual Chat Agent — available anytime via the chat icon (bottom-right)</div>
-      <div class="contact-detail">🎫 <a href="#">Submit a Support Ticket Online</a></div>
-      <div class="contact-detail">📅 <a href="#">Schedule a Helpdesk Appointment</a></div>
-      <span class="hours-tag">Ticket Portal: 24/7</span>
+  </div>
+
+  <!-- LABS -->
+  <div class="section-header" id="labs">
+    <div class="section-label">Campus Resources</div>
+    <div class="section-title">Computer Labs</div>
+  </div>
+  <div class="labs-grid" style="margin-bottom:0;">
+    <!-- PLACEHOLDER: confirm lab names, locations, hours, and equipment before launch -->
+    <div class="lab-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <h4>Mossman Library Lab</h4>
+        <span class="open-tag">Open Now</span>
+      </div>
+      <div class="lab-detail">📍 Mossman Library, Lower Level</div>
+      <div class="lab-detail">🕐 Mon–Fri: 7:30 AM – 10 PM &nbsp;|&nbsp; Sat–Sun: 10 AM – 6 PM</div>
+      <div class="lab-detail">🖥️ Windows PCs &nbsp;·&nbsp; CardSwipe Printing Available</div>
+    </div>
+    <div class="lab-card">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <h4>Christy Admin Computer Lab</h4>
+        <span class="open-tag">Open Now</span>
+      </div>
+      <div class="lab-detail">📍 Christy Administration Building</div>
+      <div class="lab-detail">🕐 Mon–Fri: 8 AM – 5 PM</div>
+      <div class="lab-detail">🖥️ Windows PCs &nbsp;·&nbsp; CardSwipe Printing Available</div>
     </div>
   </div>
 
-  <!-- SERVICE CATALOG -->
-  <div class="section-header">
-    <div class="section-label">What We Support</div>
-    <div class="section-title">IT Service Catalog</div>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">📧</div>
-      <h4>Microsoft 365</h4>
-      <p>Email, Teams, Word, Excel, OneDrive — free for all SC students.</p>
-      <div class="arrow">Login & Setup →</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📚</div>
-      <h4>Blackboard LMS</h4>
-      <p>Access your courses, assignments, grades, and announcements.</p>
-      <div class="arrow">Login to Blackboard →</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📶</div>
-      <h4>Campus Wi-Fi</h4>
-      <p>Connect your devices to the SC campus wireless network.</p>
-      <div class="arrow">Wi-Fi Setup Guide →</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🔐</div>
-      <h4>Account & Passwords</h4>
-      <p>Reset your SC password, manage MFA, and update account settings.</p>
-      <div class="arrow">Password Reset →</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🖨️</div>
-      <h4>Printing Services</h4>
-      <p>Print from any campus lab or your personal device via SC Print.</p>
-      <div class="arrow">Printing Guide →</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🖥️</div>
-      <h4>Computer Labs</h4>
-      <p>Open-access labs across campus with specialized software installed.</p>
-      <div class="arrow">Find a Lab →</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🔒</div>
-      <h4>VPN Access</h4>
-      <p>Securely access SC network resources from off campus.</p>
-      <div class="arrow">VPN Setup →</div>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">💻</div>
-      <h4>Loaner Devices</h4>
-      <p>Short-term laptop loans available for enrolled students in need.</p>
-      <div class="arrow">Check Availability →</div>
-    </div>
-  </div>
-
-  <!-- GETTING STARTED -->
-  <div class="onboarding-section">
-    <h2>🎓 New Student? Start Here.</h2>
-    <p>Complete these 5 steps to get fully set up for your first semester at SC.</p>
-    <div class="steps-row">
-      <div class="step-pill"><span class="step-num">1</span> Activate your SC account</div>
-      <div class="step-pill"><span class="step-num">2</span> Set up Microsoft 365</div>
-      <div class="step-pill"><span class="step-num">3</span> Log into Blackboard</div>
-      <div class="step-pill"><span class="step-num">4</span> Connect to SC Wi-Fi</div>
-      <div class="step-pill"><span class="step-num">5</span> Enable Multi-Factor Auth</div>
-    </div>
-  </div>
-
-  <!-- FAQ + SOFTWARE -->
-  <div class="two-col">
-    <div class="faq-section">
+  <!-- FAQ + SECURITY -->
+  <div class="two-col" style="margin-top:3.5rem;">
+    <div class="faq-section" id="faq">
       <div class="faq-header"><h3>❓ Frequently Asked Questions</h3></div>
-      <div class="faq-item open" onclick="this.classList.toggle('open')">
+      <div class="faq-item" onclick="this.classList.toggle('open')">
         <div class="faq-q">How do I reset my SC password? <span class="chevron">▼</span></div>
-        <div class="faq-a">Visit the <a href="#">Password Reset Portal</a> and follow the prompts. You'll need access to your recovery email or phone number. If locked out, contact the helpdesk at 620-229-6444.</div>
+        <div class="faq-a" onclick="event.stopPropagation()">Visit the <a href="https://password.sckans.edu">Password Reset Portal</a> and follow the prompts. You'll need access to your recovery email, phone, or Authenticator app. If you're locked out, contact the Helpdesk at 620-229-6444.</div>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('open')">
         <div class="faq-q">What software do I get for free? <span class="chevron">▼</span></div>
-        <div class="faq-a">All enrolled students receive Microsoft 365 (Word, Excel, PowerPoint, Teams, OneDrive) at no cost. Additional software is available in computer labs.</div>
+        <div class="faq-a" onclick="event.stopPropagation()">All enrolled students receive Microsoft 365 (email, Word, Excel, PowerPoint, Teams, and 1TB of OneDrive storage) at no cost for the duration of enrollment. SC-issued laptops also auto-install Office, Acrobat Reader, and the Cisco AnyConnect VPN client.</div>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('open')">
         <div class="faq-q">How do I connect to SC campus Wi-Fi? <span class="chevron">▼</span></div>
-        <div class="faq-a">Select "SC-Wireless" from your network list and sign in with your SC credentials. Visit our <a href="#">Wi-Fi setup guide</a> for device-specific instructions.</div>
+        <div class="faq-a" onclick="event.stopPropagation()">Select <strong>SC_Secure</strong> from your network list and sign in with your SC email address (firstname.lastname@sckans.edu) and password. See the <a href="https://sckans.edu/file/6759">Wi-Fi setup guide</a> for device-specific instructions.</div>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('open')">
+        <div class="faq-q">How do I print on campus? <span class="chevron">▼</span></div>
+        <div class="faq-a" onclick="event.stopPropagation()">Email your document to <a href="mailto:cardswipe@sckans.edu">cardswipe@sckans.edu</a> from your SC email, then swipe your student ID at any CardSwipe printer on campus to release your print job.</div>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('open')">
         <div class="faq-q">My Blackboard isn't loading — what do I do? <span class="chevron">▼</span></div>
-        <div class="faq-a">First, check the <a href="#">System Status page</a>. If all systems are green, try clearing your browser cache. For after-hours issues, call 316-201-3490.</div>
+        <div class="faq-a" onclick="event.stopPropagation()">Try clearing your browser cache and signing in again at <a href="https://learn.sckans.edu">learn.sckans.edu</a>. During business hours, contact the Helpdesk; for after-hours Blackboard issues, call <a href="tel:+13162013490">316-201-3490</a> (available 24/7).</div>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('open')">
-        <div class="faq-q">Can I borrow a laptop? <span class="chevron">▼</span></div>
-        <div class="faq-a">Yes. Short-term loaner laptops are available through the Helpdesk. Visit the Helpdesk in Christy Admin during business hours to check availability.</div>
+        <div class="faq-q">Can I buy a used SC laptop? <span class="chevron">▼</span></div>
+        <div class="faq-a" onclick="event.stopPropagation()">Yes — SC resells laptops at the end of their cycle. Visit the <a href="https://form.jotform.com/SouthwesternCollege/laptop-resales">Laptop Resales form</a> to see availability and purchase.</div>
       </div>
     </div>
 
-    <div class="software-section">
-      <div class="software-header"><h3>💿 Available Software</h3></div>
-      <div class="software-list">
-        <div class="software-item">
-          <div class="sw-left"><span class="sw-icon">📧</span><span class="sw-name">Microsoft 365</span></div>
-          <div><span class="sw-badge free">Free</span></div>
-        </div>
-        <div class="software-item">
-          <div class="sw-left"><span class="sw-icon">📹</span><span class="sw-name">Microsoft Teams</span></div>
-          <div><span class="sw-badge free">Free</span></div>
-        </div>
-        <div class="software-item">
-          <div class="sw-left"><span class="sw-icon">☁️</span><span class="sw-name">OneDrive (1TB)</span></div>
-          <div><span class="sw-badge free">Free</span></div>
-        </div>
-        <div class="software-item">
-          <div class="sw-left"><span class="sw-icon">🔬</span><span class="sw-name">SPSS Statistics</span></div>
-          <div><span class="sw-badge licensed">Lab Only</span></div>
-        </div>
-        <div class="software-item">
-          <div class="sw-left"><span class="sw-icon">🎨</span><span class="sw-name">Adobe Creative Suite</span></div>
-          <div><span class="sw-badge licensed">Lab Only</span></div>
-        </div>
-        <div class="software-item" style="padding-bottom:0.3rem;">
-          <a href="#" class="sw-link">View full software catalog →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SECURITY + LABS -->
-  <div class="two-col">
-    <div class="security-card">
+    <div class="security-card" id="security">
       <h3>🛡️ Security & Acceptable Use</h3>
       <p>Protect your SC account and personal data with these essential practices.</p>
       <div class="security-tips">
-        <div class="tip"><span class="tip-icon">🔐</span> Enable Multi-Factor Authentication (MFA) on your SC account — <a href="#">Set up MFA</a></div>
-        <div class="tip"><span class="tip-icon">🎣</span> Never share your SC password. IT will never ask for it via email or phone.</div>
-        <div class="tip"><span class="tip-icon">📱</span> Keep your devices and software updated to prevent security vulnerabilities.</div>
-        <div class="tip"><span class="tip-icon">📋</span> Review the <a href="#">Acceptable Use Policy</a> before using campus technology resources.</div>
-      </div>
-    </div>
-
-    <div>
-      <div class="section-header">
-        <div class="section-label">Campus Resources</div>
-        <div class="section-title">Computer Labs</div>
-      </div>
-      <div style="display:flex; flex-direction:column; gap:0.75rem;">
-        <div class="lab-card">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-            <h4>Mossman Library Lab</h4>
-            <span class="open-tag">Open Now</span>
-          </div>
-          <div class="lab-detail">📍 Mossman Library, Lower Level</div>
-          <div class="lab-detail">🕐 Mon–Fri: 7:30 AM – 10 PM &nbsp;|&nbsp; Sat–Sun: 10 AM – 6 PM</div>
-          <div class="lab-detail">🖥️ 24 Windows PCs &nbsp;·&nbsp; Printing Available</div>
-        </div>
-        <div class="lab-card">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-            <h4>Christy Admin Computer Lab</h4>
-            <span class="open-tag">Open Now</span>
-          </div>
-          <div class="lab-detail">📍 Christy Admin Bldg, Room 112</div>
-          <div class="lab-detail">🕐 Mon–Fri: 8 AM – 5 PM</div>
-          <div class="lab-detail">🖥️ 16 Windows PCs &nbsp;·&nbsp; Adobe Suite Available</div>
-        </div>
+        <div class="tip"><span class="tip-icon">🔐</span> <span>Set up Multi-Factor Authentication with the <strong>Microsoft Authenticator</strong> app — you'll be prompted at first login, or manage it anytime at <a href="https://password.sckans.edu">password.sckans.edu</a>.</span></div>
+        <div class="tip"><span class="tip-icon">🎣</span> <span>Never share your SC password. IT will never ask for it via email or phone.</span></div>
+        <div class="tip"><span class="tip-icon">🔑</span> <span>Passwords must be 8+ characters with a capital letter, lowercase letter, number, and special character.</span></div>
+        <div class="tip"><span class="tip-icon">📱</span> <span>Keep your devices and software updated, and review the <a href="https://sckans.edu/file/6529">Microsoft 365 Policy</a> before using campus technology resources.</span></div>
       </div>
     </div>
   </div>
 
   <!-- STAFF -->
-  <div class="section-header">
+  <div class="section-header" id="staff">
     <div class="section-label">Meet the Team</div>
     <div class="section-title">IT Staff Directory</div>
   </div>
-  <div class="staff-row">
+  <div class="staff-row" style="margin-bottom:0;">
     <div class="staff-card">
-      <div class="avatar">JD</div>
+      <div class="avatar">KR</div>
       <div class="staff-info">
-        <h4>Jane Doe</h4>
-        <p>Director of IT / OculusIT Lead</p>
-        <a href="#">j.doe@sckans.edu</a>
+        <h4>Keyunte Richards</h4>
+        <p>Chief Information Officer</p>
+        <a href="mailto:keyunte.richard@sckans.edu">keyunte.richard@sckans.edu</a>
       </div>
     </div>
     <div class="staff-card">
-      <div class="avatar">MS</div>
+      <div class="avatar">SI</div>
       <div class="staff-info">
-        <h4>Mike Smith</h4>
-        <p>Helpdesk Specialist</p>
-        <a href="#">m.smith@sckans.edu</a>
+        <h4>Scott Ireland</h4>
+        <p>Director of IT Infrastructure</p>
+        <div class="phone">📞 (620) 229-6358</div>
+        <a href="mailto:Scott.Ireland@sckans.edu">Scott.Ireland@sckans.edu</a>
       </div>
     </div>
     <div class="staff-card">
-      <div class="avatar">AL</div>
+      <div class="avatar">RS</div>
       <div class="staff-info">
-        <h4>Amy Lee</h4>
-        <p>Network & Infrastructure</p>
-        <a href="#">a.lee@sckans.edu</a>
+        <h4>Richard Sparks</h4>
+        <p>Helpdesk Technician</p>
+        <div class="phone">📞 (620) 229-6284</div>
+        <a href="mailto:Richard.Sparks@sckans.edu">Richard.Sparks@sckans.edu</a>
       </div>
     </div>
     <div class="staff-card">
-      <div class="avatar">TR</div>
+      <div class="avatar">DW</div>
       <div class="staff-info">
-        <h4>Tom Rivera</h4>
-        <p>Blackboard LMS Administrator</p>
-        <a href="#">t.rivera@sckans.edu</a>
+        <h4>Di'Juan Wiggins</h4>
+        <p>Helpdesk Technician</p>
+        <div class="phone">📞 (620) 229-6444</div>
+        <a href="mailto:DiJuan.Wiggins@sckans.edu">DiJuan.Wiggins@sckans.edu</a>
+      </div>
+    </div>
+    <div class="staff-card">
+      <div class="avatar">ZL</div>
+      <div class="staff-info">
+        <h4>Zak Larson</h4>
+        <p>Application Manager</p>
+        <a href="mailto:zak.larson@sckans.edu">zak.larson@sckans.edu</a>
+      </div>
+    </div>
+    <div class="staff-card">
+      <div class="avatar">SB</div>
+      <div class="staff-info">
+        <h4>Shane Boothe</h4>
+        <p>Director, ERP and Distance Learning</p>
+        <a href="mailto:shane.boothe@sckans.edu">shane.boothe@sckans.edu</a>
       </div>
     </div>
   </div>
 
 </div><!-- /main -->
 
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>Southwestern College — Information Technology (OculusIT)</strong><br>
+      100 College Street, Winfield, KS 67156-2499<br>
+      <a href="tel:1-800-846-1543">1-800-846-1543</a>
+    </div>
+    <div style="text-align:right;">
+      <a href="https://sckans.edu/student-services/information-technology/about-us/">About Us</a> &nbsp;·&nbsp;
+      <a href="https://form.jotform.com/SouthwesternCollege/laptop-resales">Laptop Resales</a> &nbsp;·&nbsp;
+      <a href="https://sckans.edu/student-services/information-technology/directory/">Directory</a> &nbsp;·&nbsp;
+      <a href="https://sckans.edu/student-services/">Student Services</a><br>
+      © 2026 Southwestern College
+    </div>
+  </div>
+</footer>
+
 <script>
-  // Simple FAQ toggle already handled with onclick
   // Animate cards on load
   document.querySelectorAll('.contact-card, .service-card, .lab-card, .staff-card').forEach((el, i) => {
     el.style.opacity = '0';
@@ -674,6 +786,14 @@
       el.style.opacity = '1';
       el.style.transform = 'translateY(0)';
     }, 100 + i * 50);
+  });
+
+  // Highlight quick-nav item on click
+  document.querySelectorAll('.qa-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.qa-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
   });
 </script>
 </body>
